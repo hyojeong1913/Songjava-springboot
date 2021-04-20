@@ -1,4 +1,4 @@
-package kr.co.songjava.examplespring;
+package kr.co.songjava;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
