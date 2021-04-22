@@ -37,7 +37,7 @@ public class BoardController {
      * @return
      */
     @GetMapping("/{boardSeq}")
-    Board get(@PathVariable int boardSeq) {
+    public Board get(@PathVariable int boardSeq) {
         return boardService.get(boardSeq);
     }
 
@@ -47,8 +47,12 @@ public class BoardController {
      * @param board
      */
     @GetMapping("/save")
-    void save(Board board) {
+    public int save(Board board) {
+        // 게시글 등록/수정 처리
         boardService.save(board);
+
+        // 해당 게시글의 인덱스(PK) 리턴
+        return board.getBoardSeq();
     }
 
     /**
@@ -57,7 +61,19 @@ public class BoardController {
      * @param boardSeq
      */
     @GetMapping("/delete/{boardSeq}")
-    void delete(@PathVariable int boardSeq) {
+    public boolean delete(@PathVariable int boardSeq) {
+        // 게시글 조회
+        Board board = boardService.get(boardSeq);
+
+        // 조회된 게시글이 없는 경우
+        if (board == null) {
+            return false; // 삭제해야 하는데 이미 존재하지 않으므로 false 리턴
+        }
+
+        // 게시글 삭제
         boardService.delete(boardSeq);
+
+        // 게시글 삭제했으므로 마지막으로 true 리턴
+        return true;
     }
 }

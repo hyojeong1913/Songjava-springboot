@@ -36,20 +36,20 @@ public class BoardService {
     }
 
     /**
-     * 게시글 저장
+     * 게시글 저장/수정
      *
-     * @param board
+     * @param param
      */
-    public void save(Board board) {
-        boardRepository.save(board);
-    }
+    public void save(Board param) {
+        // 게시글 조회
+        Board board = boardRepository.get(param.getBoardSeq());
 
-    /**
-     * 게시글 수정
-     * @param board
-     */
-    public void update(Board board) {
-        boardRepository.update(board);
+        // 조회된 게시글이 없는 경우 추가
+        if (board == null) {
+            boardRepository.save(param);
+        } else { // 조회된 게시글이 있는 경우 수정
+            boardRepository.update(param);
+        }
     }
 
     /**
