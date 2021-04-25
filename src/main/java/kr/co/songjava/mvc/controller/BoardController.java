@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import kr.co.songjava.configuration.http.BaseResponse;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.service.BoardService;
@@ -30,8 +31,8 @@ public class BoardController {
      */
     @GetMapping
     @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
-    public List<Board> getList() {
-        return boardService.getList();
+    public BaseResponse<List<Board>> getList() {
+        return new BaseResponse<List<Board>>(boardService.getList());
     }
 
     /**
@@ -45,8 +46,8 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
     })
-    public Board get(@PathVariable int boardSeq) {
-        return boardService.get(boardSeq);
+    public BaseResponse<Board> get(@PathVariable int boardSeq) {
+        return new BaseResponse<Board>(boardService.get(boardSeq));
     }
 
     /**
@@ -61,12 +62,12 @@ public class BoardController {
             @ApiImplicitParam(name = "title", value = "게시글 제목", example = "title1"),
             @ApiImplicitParam(name = "contents", value = "게시글 내용", example = "contents1")
     })
-    public int save(BoardParameter board) {
+    public BaseResponse<Integer> save(BoardParameter board) {
         // 게시글 등록/수정 처리
         boardService.save(board);
 
         // 해당 게시글의 인덱스(PK) 리턴
-        return board.getBoardSeq();
+        return new BaseResponse<Integer>(board.getBoardSeq());
     }
 
     /**
@@ -79,19 +80,19 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
     })
-    public boolean delete(@PathVariable int boardSeq) {
+    public BaseResponse<Boolean> delete(@PathVariable int boardSeq) {
         // 게시글 조회
         Board board = boardService.get(boardSeq);
 
         // 조회된 게시글이 없는 경우
         if (board == null) {
-            return false; // 삭제해야 하는데 이미 존재하지 않으므로 false 리턴
+            return new BaseResponse<Boolean>(false); // 삭제해야 하는데 이미 존재하지 않으므로 false 리턴
         }
 
         // 게시글 삭제
         boardService.delete(boardSeq);
 
         // 게시글 삭제했으므로 마지막으로 true 리턴
-        return true;
+        return new BaseResponse<Boolean>(true);
     }
 }
