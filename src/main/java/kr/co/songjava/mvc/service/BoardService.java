@@ -1,6 +1,7 @@
 package kr.co.songjava.mvc.service;
 
 import kr.co.songjava.mvc.domain.Board;
+import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class BoardService {
      *
      * @param param
      */
-    public void save(Board param) {
+    public void save(BoardParameter param) {
         // 게시글 조회
         Board board = boardRepository.get(param.getBoardSeq());
 

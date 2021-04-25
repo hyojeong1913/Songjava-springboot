@@ -1,12 +1,14 @@
 package kr.co.songjava.mvc.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import kr.co.songjava.mvc.domain.Board;
+import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/board")
+@Api(tags = "게시판 API")
 public class BoardController {
 
     @Autowired
@@ -26,17 +29,22 @@ public class BoardController {
      * @return
      */
     @GetMapping
+    @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
     public List<Board> getList() {
         return boardService.getList();
     }
 
     /**
-     * 게시판 단건 게시글 조회
+     * 게시글 상세 조회
      *
      * @param boardSeq
      * @return
      */
     @GetMapping("/{boardSeq}")
+    @ApiOperation(value = "게시글 상세 조회", notes = "게시글 번호에 해당하는 상세 정보를 조회할 수 있습니다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
+    })
     public Board get(@PathVariable int boardSeq) {
         return boardService.get(boardSeq);
     }
@@ -46,8 +54,14 @@ public class BoardController {
      *
      * @param board
      */
-    @GetMapping("/save")
-    public int save(Board board) {
+    @PostMapping
+    @ApiOperation(value = "게시글 등록/수정 처리", notes = "신규 게시글 저장 및 기존 게시글 수정이 가능합니다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1"),
+            @ApiImplicitParam(name = "title", value = "게시글 제목", example = "title1"),
+            @ApiImplicitParam(name = "contents", value = "게시글 내용", example = "contents1")
+    })
+    public int save(BoardParameter board) {
         // 게시글 등록/수정 처리
         boardService.save(board);
 
@@ -60,7 +74,11 @@ public class BoardController {
      *
      * @param boardSeq
      */
-    @GetMapping("/delete/{boardSeq}")
+    @DeleteMapping("/{boardSeq}")
+    @ApiOperation(value = "게시글 삭제 처리", notes = "게시글 번호에 해당하는 상세 정보를 삭제할 수 있습니다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
+    })
     public boolean delete(@PathVariable int boardSeq) {
         // 게시글 조회
         Board board = boardService.get(boardSeq);

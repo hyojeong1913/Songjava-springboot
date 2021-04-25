@@ -1,6 +1,7 @@
 package kr.co.songjava.mvc.repository;
 
 import kr.co.songjava.mvc.domain.Board;
+import kr.co.songjava.mvc.parameter.BoardParameter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,10 +19,10 @@ public interface BoardRepository {
     Board get(int boardSeq);
 
     // 게시글 저장
-    void save(Board board);
+    void save(BoardParameter board);
 
     // 게시글 수정
-    void update(Board board);
+    void update(BoardParameter board);
 
     // 게시글 삭제
     void delete(int boardSeq);
