@@ -14,12 +14,12 @@ public enum BaseResponseCode {
 
     ERROR, // 에러
     LOGIN_REQUIRED, // 로그인 필수
-    DATA_IS_NULL, // NULL
+    DATA_IS_NULL, // NULL 체크
     UPLOAD_FILE_IS_NULL,
     PERMISSION,
 
     VALIDATE_DEFAULT,
-    VALIDATE_REQUIRED,
+    VALIDATE_REQUIRED, // 필수 체크
     VALIDATE_CHECKED,
     VALIDATE_SIZE,
     VALIDATE_ARRAY_SIZE,

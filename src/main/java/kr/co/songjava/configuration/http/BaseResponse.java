@@ -14,8 +14,24 @@ public class BaseResponse<T> {
     private String message;
     private T data;
 
+    /**
+     * 성공
+     *
+     * @param data
+     */
     public BaseResponse(T data) {
         this.code = BaseResponseCode.SUCCESS;
         this.data = data;
+    }
+
+    /**
+     * 예외 처리
+     *
+     * @param responseCode
+     * @param message
+     */
+    public BaseResponse(BaseResponseCode responseCode, String message) {
+        this.code = responseCode;
+        this.message = message;
     }
 }

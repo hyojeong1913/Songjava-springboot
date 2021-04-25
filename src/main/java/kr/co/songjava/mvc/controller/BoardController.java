@@ -4,11 +4,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import kr.co.songjava.configuration.exception.BaseException;
 import kr.co.songjava.configuration.http.BaseResponse;
+import kr.co.songjava.configuration.http.BaseResponseCode;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +50,12 @@ public class BoardController {
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
     })
     public BaseResponse<Board> get(@PathVariable int boardSeq) {
-        return new BaseResponse<Board>(boardService.get(boardSeq));
+        Board board = boardService.get(boardSeq);
+
+        if (board == null) {
+            throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] { "게시글" });
+        }
+        return new BaseResponse<Board>(board);
     }
 
     /**
@@ -63,6 +71,17 @@ public class BoardController {
             @ApiImplicitParam(name = "contents", value = "게시글 내용", example = "contents1")
     })
     public BaseResponse<Integer> save(BoardParameter board) {
+
+        // 게시글 제목 필수 체크
+        if (StringUtils.isEmpty(board.getTitle())) {
+            throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] { "title", "게시글 제목" });
+        }
+
+        // 게시글 내용 필수 체크
+        if (StringUtils.isEmpty(board.getContents())) {
+            throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] { "contents", "게시글 내용" });
+        }
+
         // 게시글 등록/수정 처리
         boardService.save(board);
 
