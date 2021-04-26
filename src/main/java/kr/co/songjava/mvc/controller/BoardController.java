@@ -10,6 +10,8 @@ import kr.co.songjava.configuration.http.BaseResponseCode;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.service.BoardService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,8 @@ import java.util.List;
 @Api(tags = "게시판 API")
 public class BoardController {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private BoardService boardService;
 
@@ -35,6 +39,7 @@ public class BoardController {
     @GetMapping
     @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
     public BaseResponse<List<Board>> getList() {
+        logger.info("getList");
         return new BaseResponse<List<Board>>(boardService.getList());
     }
 
