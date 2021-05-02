@@ -6,7 +6,9 @@ import kr.co.songjava.mvc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 게시판 서비스
@@ -51,6 +53,28 @@ public class BoardService {
         } else { // 조회된 게시글이 있는 경우 수정
             boardRepository.update(param);
         }
+    }
+
+    /**
+     * 단순 반복문을 이용한 게시글 등록 처리
+     *
+     * @param list
+     */
+    public void saveList1(List<BoardParameter> list) {
+        for (BoardParameter parameter : list) {
+            boardRepository.save(parameter);
+        }
+    }
+
+    /**
+     * 100개씩 배열에 담아서 일괄 게시글 등록 처리
+     *
+     * @param boardList
+     */
+    public void saveList2(List<BoardParameter> boardList) {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("boardList", boardList);
+        boardRepository.saveList(paramMap);
     }
 
     /**

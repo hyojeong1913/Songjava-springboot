@@ -5,6 +5,7 @@ import kr.co.songjava.mvc.parameter.BoardParameter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 게시판 Repository
@@ -20,6 +21,7 @@ public interface BoardRepository {
 
     // 게시글 저장
     void save(BoardParameter board);
+    void saveList(Map<String, Object> paramMap);
 
     // 게시글 수정
     void update(BoardParameter board);
