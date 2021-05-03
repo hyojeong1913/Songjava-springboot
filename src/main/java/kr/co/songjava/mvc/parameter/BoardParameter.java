@@ -1,5 +1,6 @@
 package kr.co.songjava.mvc.parameter;
 
+import kr.co.songjava.mvc.domain.BoardType;
 import lombok.Data;
 
 @Data
@@ -7,6 +8,7 @@ public class BoardParameter {
 
     private int boardSeq;
     private String title;
+    private BoardType boardType;
     private String contents;
 
     // 기본 생성자

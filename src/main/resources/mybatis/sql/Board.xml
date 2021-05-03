@@ -7,6 +7,7 @@
         SELECT
             B.BOARD_SEQ,
             B.TITLE,
+            B.BOARD_TYPE,
             B.CONTENTS,
             B.REG_DATE
         FROM
@@ -18,6 +19,7 @@
         SELECT
             B.BOARD_SEQ,
             B.TITLE,
+            B.BOARD_TYPE,
             B.CONTENTS,
             B.REG_DATE
         FROM
@@ -30,12 +32,14 @@
         INSERT INTO T_BOARD
         (
          TITLE,
+         BOARD_TYPE,
          CONTENTS,
          REG_DATE
         )
         VALUES
         (
          #{title},
+         #{boardType.code},
          #{contents},
          NOW()
         )

@@ -75,6 +75,7 @@ public class BoardController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1"),
             @ApiImplicitParam(name = "title", value = "게시글 제목", example = "title1"),
+            @ApiImplicitParam(name = "boardType", value = "게시글 유형", example = "NOTICE"),
             @ApiImplicitParam(name = "contents", value = "게시글 내용", example = "contents1")
     })
     public BaseResponse<Integer> save(BoardParameter board) {
