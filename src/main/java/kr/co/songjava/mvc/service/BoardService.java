@@ -1,5 +1,6 @@
 package kr.co.songjava.mvc.service;
 
+import kr.co.songjava.framework.data.domain.PageRequestParameter;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.parameter.BoardSearchParameter;
@@ -23,10 +24,11 @@ public class BoardService {
     /**
      * 게시판 목록 조회
      *
+     * @param pageRequestParameter
      * @return
      */
-    public List<Board> getList(BoardSearchParameter parameter) {
-        return boardRepository.getList(parameter);
+    public List<Board> getList(PageRequestParameter<BoardSearchParameter> pageRequestParameter) {
+        return boardRepository.getList(pageRequestParameter);
     }
 
     /**

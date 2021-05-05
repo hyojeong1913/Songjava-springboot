@@ -1,5 +1,6 @@
 package kr.co.songjava.mvc.repository;
 
+import kr.co.songjava.framework.data.domain.PageRequestParameter;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.parameter.BoardSearchParameter;
@@ -15,7 +16,7 @@ import java.util.Map;
 public interface BoardRepository {
 
     // 게시판 목록 조회
-    List<Board> getList(BoardSearchParameter parameter);
+    List<Board> getList(PageRequestParameter<BoardSearchParameter> pageRequestParameter);
 
     // 게시판 단건 게시글 조회
     Board get(int boardSeq);
