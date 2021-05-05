@@ -2,6 +2,7 @@ package kr.co.songjava.mvc.service;
 
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
+import kr.co.songjava.mvc.parameter.BoardSearchParameter;
 import kr.co.songjava.mvc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class BoardService {
      *
      * @return
      */
-    public List<Board> getList() {
-        return boardRepository.getList();
+    public List<Board> getList(BoardSearchParameter parameter) {
+        return boardRepository.getList(parameter);
     }
 
     /**

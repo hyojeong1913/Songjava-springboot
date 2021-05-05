@@ -2,6 +2,7 @@ package kr.co.songjava.mvc.repository;
 
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
+import kr.co.songjava.mvc.parameter.BoardSearchParameter;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 public interface BoardRepository {
 
     // 게시판 목록 조회
-    List<Board> getList();
+    List<Board> getList(BoardSearchParameter parameter);
 
     // 게시판 단건 게시글 조회
     Board get(int boardSeq);

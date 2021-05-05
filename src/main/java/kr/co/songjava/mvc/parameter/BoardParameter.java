@@ -3,6 +3,9 @@ package kr.co.songjava.mvc.parameter;
 import kr.co.songjava.mvc.domain.BoardType;
 import lombok.Data;
 
+/**
+ * 게시글 파라미터
+ */
 @Data
 public class BoardParameter {
 

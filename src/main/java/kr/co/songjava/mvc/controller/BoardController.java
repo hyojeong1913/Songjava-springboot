@@ -1,14 +1,12 @@
 package kr.co.songjava.mvc.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import kr.co.songjava.configuration.exception.BaseException;
 import kr.co.songjava.configuration.http.BaseResponse;
 import kr.co.songjava.configuration.http.BaseResponseCode;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.mvc.parameter.BoardParameter;
+import kr.co.songjava.mvc.parameter.BoardSearchParameter;
 import kr.co.songjava.mvc.service.BoardService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -40,9 +38,9 @@ public class BoardController {
      */
     @GetMapping
     @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
-    public BaseResponse<List<Board>> getList() {
+    public BaseResponse<List<Board>> getList(@ApiParam BoardSearchParameter parameter) {
         logger.info("getList");
-        return new BaseResponse<List<Board>>(boardService.getList());
+        return new BaseResponse<List<Board>>(boardService.getList(parameter));
     }
 
     /**
