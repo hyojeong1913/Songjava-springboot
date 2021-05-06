@@ -5,6 +5,7 @@ import kr.co.songjava.configuration.exception.BaseException;
 import kr.co.songjava.configuration.http.BaseResponse;
 import kr.co.songjava.configuration.http.BaseResponseCode;
 import kr.co.songjava.framework.data.domain.PageRequestParameter;
+import kr.co.songjava.framework.web.bind.annotation.RequestConfig;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.framework.data.domain.MySQLPageRequest;
 import kr.co.songjava.mvc.parameter.BoardParameter;
@@ -79,6 +80,7 @@ public class BoardController {
      * @param board
      */
     @PostMapping
+    @RequestConfig(loginCheck = true)
     @ApiOperation(value = "게시글 등록/수정 처리", notes = "신규 게시글 저장 및 기존 게시글 수정이 가능합니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1"),
@@ -112,6 +114,7 @@ public class BoardController {
      */
     @ApiOperation(value = "대용량 등록 처리1", notes = "대용량 등록 처리1")
     @PostMapping("/saveList1")
+    @RequestConfig(loginCheck = true)
     public BaseResponse<Boolean> saveList1() {
         int count = 0;
 
@@ -146,6 +149,7 @@ public class BoardController {
      * @return
      */
     @PostMapping("/saveList2")
+    @RequestConfig(loginCheck = true)
     @ApiOperation(value = "대용량 등록 처리2", notes = "대용량 등록 처리2")
     public BaseResponse<Boolean> saveList2() {
         int count = 0;
@@ -181,6 +185,7 @@ public class BoardController {
      * @param boardSeq
      */
     @DeleteMapping("/{boardSeq}")
+    @RequestConfig(loginCheck = true)
     @ApiOperation(value = "게시글 삭제 처리", notes = "게시글 번호에 해당하는 상세 정보를 삭제할 수 있습니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
