@@ -59,6 +59,11 @@ public class WebConfiguration implements WebMvcConfigurer {
         return jsonView;
     }
 
+    @Bean
+    public GlobalConfig config() {
+        return new GlobalConfig();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
         interceptorRegistry.addInterceptor(baseHandlerInterceptor());
