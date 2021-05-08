@@ -78,9 +78,10 @@ public class BoardController {
      * 게시글 등록/수정 처리
      *
      * @param board
+     * @return
      */
     @PostMapping
-    @RequestConfig(loginCheck = true)
+    @RequestConfig(loginCheck = false)
     @ApiOperation(value = "게시글 등록/수정 처리", notes = "신규 게시글 저장 및 기존 게시글 수정이 가능합니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1"),

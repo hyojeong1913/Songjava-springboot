@@ -13,6 +13,7 @@ public class BoardParameter {
     private String title;
     private BoardType boardType;
     private String contents;
+    private boolean delYn;
 
     // 기본 생성자
     public BoardParameter() {

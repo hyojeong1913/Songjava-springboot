@@ -3,13 +3,18 @@
 
 <mapper namespace="kr.co.songjava.mvc.repository.BoardRepository">
 
-    <select id="getList" parameterType="kr.co.songjava.framework.data.domain.PageRequestParameter" resultType="kr.co.songjava.mvc.domain.Board">
+    <resultMap id="getListResultMap" type="kr.co.songjava.mvc.domain.Board">
+        <result column="DEL_YN" property="delYn" typeHandler="kr.co.songjava.configuration.mybatis.typehandler.StringValueBooleanTypeHandler" />
+    </resultMap>
+    
+    <select id="getList" parameterType="kr.co.songjava.framework.data.domain.PageRequestParameter" resultMap="getListResultMap">
         SELECT
             B.BOARD_SEQ,
             B.TITLE,
             B.BOARD_TYPE,
             B.CONTENTS,
-            B.REG_DATE
+            B.REG_DATE,
+            B.DEL_YN
         FROM
             T_BOARD B
         <where>
@@ -50,14 +55,16 @@
          TITLE,
          BOARD_TYPE,
          CONTENTS,
-         REG_DATE
+         REG_DATE,
+         DEL_YN
         )
         VALUES
         (
          #{title},
          #{boardType.code},
          #{contents},
-         NOW()
+         NOW(),
+         #{delYn, typeHandler=kr.co.songjava.configuration.mybatis.typehandler.StringValueBooleanTypeHandler}
         )
     </insert>
 
@@ -82,7 +89,9 @@
         UPDATE T_BOARD
         SET
             TITLE = #{title},
-            CONTENTS = #{contents}
+            BOARD_TYPE = #{boardType.code},
+            CONTENTS = #{contents},
+            DEL_YN = #{delYn, typeHandler=kr.co.songjava.configuration.mybatis.typehandler.StringValueBooleanTypeHandler}
         WHERE
             BOARD_SEQ = #{boardSeq}
     </update>
