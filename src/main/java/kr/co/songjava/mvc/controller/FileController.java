@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Calendar;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/file")
@@ -42,8 +44,30 @@ public class FileController {
         String uploadFilePath = config.getUploadFilePath();
         logger.debug("uploadFilePath : {}", uploadFilePath);
 
-        if (config.isProd()) {
-            logger.debug("isProd calendar : {}", Calendar.getInstance());
+        String prefix = multipartFile
+                .getOriginalFilename()
+                .substring(multipartFile
+                        .getOriginalFilename()
+                        .lastIndexOf(".") + 1, multipartFile.getOriginalFilename().length());
+        String filename = UUID.randomUUID().toString() + "." + prefix;
+
+        logger.debug("filename : {}", filename);
+
+        File folder = new File(uploadFilePath);
+
+        // 폴더가 없다면 생성
+        if (!folder.isDirectory()) {
+            folder.mkdirs();
+        }
+
+        String pathname = uploadFilePath + filename;
+
+        File dest = new File(pathname);
+
+        try {
+            multipartFile.transferTo(dest);
+        } catch (IllegalStateException | IOException e) {
+            logger.error("e", e);
         }
 
         return new BaseResponse<Boolean>(true);
