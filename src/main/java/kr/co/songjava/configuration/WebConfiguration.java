@@ -11,6 +11,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.MediaType;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -73,5 +74,19 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         // 페이지 리졸버 등록
         resolvers.add(new MySQLPageRequestHandleMethodArgumentResolver());
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        // 업로드 파일 static resource 접근 경로
+        String resourcePattern = config().getUploadResourcePath() + "**";
+
+        if (config().isProd()) {
+            // 가상의 url alias 개념
+            registry.addResourceHandler(resourcePattern).addResourceLocations("file:" + config().getUploadFilePath()); // 리눅스 또는 유닉스 환경
+        } else {
+            registry.addResourceHandler(resourcePattern).addResourceLocations("file:///" + config().getUploadFilePath()); // 윈도우 환경
+        }
     }
 }
