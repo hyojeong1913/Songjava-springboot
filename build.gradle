@@ -51,6 +51,9 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/jstl/jstl
 	implementation group: 'jstl', name: 'jstl', version: '1.2'
+
+	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
 }
 
 test {
