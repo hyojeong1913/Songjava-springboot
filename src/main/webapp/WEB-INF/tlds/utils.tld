@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+TLD (Tag Library Descriptor) : JSP 에서 사용되는 커스텀 태그나 JSTL 의 태그들에 대한 설정 파일
+-->
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web"
+        version="2.0">
+
+    <description>JSTL 1.1 functions library</description>
+    <display-name>JSTL functions</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>util</short-name>
+    
+    <function>
+        <name>isSelected</name>
+        <function-class>kr.co.songjava.framework.util.EnumUtils</function-class>
+        <function-signature>boolean isSelected(kr.co.songjava.mvc.domain.BaseCodeLabelEnum[],kr.co.songjava.mvc.domain.BaseCodeLabelEnum)</function-signature>
+    </function>
+</taglib>
