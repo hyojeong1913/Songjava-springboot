@@ -15,6 +15,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * 게시판 Controller
  */
-@RestController
+@Controller
 @RequestMapping("/board")
 @Api(tags = "게시판 API")
 public class BoardController {
@@ -75,13 +77,32 @@ public class BoardController {
     }
 
     /**
+     * 등록/수정 화면으로 이동
+     *
+     * @param parameter
+     * @param model
+     */
+    @GetMapping("/form")
+    @RequestConfig(loginCheck = false)
+    public void form(BoardParameter parameter, Model model) {
+        // 수정 화면
+        if (parameter.getBoardSeq() > 0) {
+            Board board = boardService.get(parameter.getBoardSeq());
+            model.addAttribute("board", board);
+        }
+
+        model.addAttribute("parameter", parameter);
+    }
+
+    /**
      * 게시글 등록/수정 처리
      *
      * @param board
      * @return
      */
-    @PostMapping
+    @PostMapping("/save")
     @RequestConfig(loginCheck = false)
+    @ResponseBody
     @ApiOperation(value = "게시글 등록/수정 처리", notes = "신규 게시글 저장 및 기존 게시글 수정이 가능합니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1"),
