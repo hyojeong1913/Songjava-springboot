@@ -43,17 +43,15 @@ public class BoardController {
      * @param pageRequest
      * @return
      */
-    @GetMapping
+    @GetMapping("/list")
     @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
-    public BaseResponse<List<Board>> getList(
-            @ApiParam BoardSearchParameter parameter,
-            @ApiParam MySQLPageRequest pageRequest
-    ) {
+    public void list(BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
         logger.info("pageRequest : {}", pageRequest);
 
         PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<BoardSearchParameter>(pageRequest, parameter);
 
-        return new BaseResponse<List<Board>>(boardService.getList(pageRequestParameter));
+        List<Board> boardList = boardService.getList(pageRequestParameter);
+        model.addAttribute("boardList", boardList);
     }
 
     /**

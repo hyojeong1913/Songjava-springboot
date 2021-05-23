@@ -11,6 +11,7 @@ public class Board {
     private BoardType boardType;
     private String title;
     private String contents;
+    private int viewCount;
     private Date regDate;
     private boolean delYn;
 }
