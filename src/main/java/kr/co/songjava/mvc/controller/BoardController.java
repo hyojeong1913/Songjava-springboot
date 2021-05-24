@@ -61,21 +61,20 @@ public class BoardController {
      * @return
      */
     @GetMapping("/{boardSeq}")
-    @ApiOperation(value = "게시글 상세 조회", notes = "게시글 번호에 해당하는 상세 정보를 조회할 수 있습니다.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "boardSeq", value = "게시글 번호", example = "1")
-    })
-    public BaseResponse<Board> get(@PathVariable int boardSeq) {
+    public String detail(@PathVariable int boardSeq, Model model) {
         Board board = boardService.get(boardSeq);
 
         if (board == null) {
             throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] { "게시글" });
         }
-        return new BaseResponse<Board>(board);
+
+        model.addAttribute("board", board);
+
+        return "/board/detail";
     }
 
     /**
-     * 등록/수정 화면으로 이동
+     * 등록 화면으로 이동
      *
      * @param parameter
      * @param model
@@ -90,6 +89,26 @@ public class BoardController {
         }
 
         model.addAttribute("parameter", parameter);
+    }
+
+    /**
+     * 수정 화면으로 이동
+     *
+     * @param boardSeq
+     * @param model
+     */
+    @GetMapping("/edit/{boardSeq}")
+    @RequestConfig(loginCheck = false)
+    public String edit(@PathVariable(required = true) int boardSeq, BoardParameter parameter, Model model) {
+        // 수정 화면
+        if (parameter.getBoardSeq() > 0) {
+            Board board = boardService.get(parameter.getBoardSeq());
+            model.addAttribute("board", board);
+        }
+
+        model.addAttribute("parameter", parameter);
+
+        return "/board/form";
     }
 
     /**

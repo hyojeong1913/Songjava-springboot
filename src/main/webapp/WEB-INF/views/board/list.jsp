@@ -37,7 +37,7 @@
                     <c:forEach var="board" items="${boardList}" varStatus="status">
                         <tr>
                             <th scope="row">${status.count}</th>
-                            <td>${board.title}</td>
+                            <td><a href="/board/${board.boardSeq}">${board.title}</a></td>
                             <td>${board.viewCount}</td>
                             <td><fmt:formatDate value="${board.regDate}" pattern="yyyy:MM:dd HH:mm" /></td>
                         </tr>
@@ -50,6 +50,10 @@
                     </c:if>
                 </tbody>
             </table>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+                <a href="/board/form" class="btn btn-primary" type="button"><spring:message code="button.form" /></a>
+            </div>
         </form>
     </div>
 
