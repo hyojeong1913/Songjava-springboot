@@ -8,6 +8,7 @@ import kr.co.songjava.framework.data.domain.PageRequestParameter;
 import kr.co.songjava.framework.web.bind.annotation.RequestConfig;
 import kr.co.songjava.mvc.domain.Board;
 import kr.co.songjava.framework.data.domain.MySQLPageRequest;
+import kr.co.songjava.mvc.domain.MenuType;
 import kr.co.songjava.mvc.parameter.BoardParameter;
 import kr.co.songjava.mvc.parameter.BoardSearchParameter;
 import kr.co.songjava.mvc.service.BoardService;
@@ -27,8 +28,6 @@ import java.util.List;
  * 게시판 Controller
  */
 @Controller
-@RequestMapping("/board")
-@Api(tags = "게시판 API")
 public class BoardController {
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -39,28 +38,34 @@ public class BoardController {
     /**
      * 게시판 목록 조회
      *
+     * @param menuType
      * @param parameter
      * @param pageRequest
+     * @param model
      * @return
      */
-    @GetMapping("/list")
+    @GetMapping("/{menuType}")
     @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
-    public void list(BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
+    public String list(@PathVariable MenuType menuType, BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
+        logger.info("menuType : {}", menuType);
         logger.info("pageRequest : {}", pageRequest);
 
         PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<BoardSearchParameter>(pageRequest, parameter);
 
         List<Board> boardList = boardService.getList(pageRequestParameter);
         model.addAttribute("boardList", boardList);
+
+        return "/board/list";
     }
 
     /**
-     * 게시글 상세 조회
+     * 상세 페이지
      *
      * @param boardSeq
+     * @param model
      * @return
      */
-    @GetMapping("/{boardSeq}")
+    @GetMapping("/detail/{boardSeq}")
     public String detail(@PathVariable int boardSeq, Model model) {
         Board board = boardService.get(boardSeq);
 
