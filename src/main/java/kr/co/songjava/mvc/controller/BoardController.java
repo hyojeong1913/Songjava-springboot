@@ -45,7 +45,6 @@ public class BoardController {
      * @return
      */
     @GetMapping("/{menuType}")
-    @ApiOperation(value = "게시판 목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
     public String list(@PathVariable MenuType menuType, BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
         logger.info("menuType : {}", menuType);
         logger.info("pageRequest : {}", pageRequest);
@@ -54,6 +53,7 @@ public class BoardController {
 
         List<Board> boardList = boardService.getList(pageRequestParameter);
         model.addAttribute("boardList", boardList);
+        model.addAttribute("menuType", menuType);
 
         return "/board/list";
     }
@@ -61,12 +61,13 @@ public class BoardController {
     /**
      * 상세 페이지
      *
+     * @param menuType
      * @param boardSeq
      * @param model
      * @return
      */
-    @GetMapping("/detail/{boardSeq}")
-    public String detail(@PathVariable int boardSeq, Model model) {
+    @GetMapping("/{menuType}/{boardSeq}")
+    public String detail(@PathVariable MenuType menuType, @PathVariable int boardSeq, Model model) {
         Board board = boardService.get(boardSeq);
 
         if (board == null) {
@@ -74,6 +75,7 @@ public class BoardController {
         }
 
         model.addAttribute("board", board);
+        model.addAttribute("menuType", menuType);
 
         return "/board/detail";
     }
@@ -81,30 +83,31 @@ public class BoardController {
     /**
      * 등록 화면으로 이동
      *
+     * @param menuType
      * @param parameter
      * @param model
      */
-    @GetMapping("/form")
+    @GetMapping("/{menuType}/form")
     @RequestConfig(loginCheck = false)
-    public void form(BoardParameter parameter, Model model) {
-        // 수정 화면
-        if (parameter.getBoardSeq() > 0) {
-            Board board = boardService.get(parameter.getBoardSeq());
-            model.addAttribute("board", board);
-        }
-
+    public String form(@PathVariable MenuType menuType, BoardParameter parameter, Model model) {
         model.addAttribute("parameter", parameter);
+        model.addAttribute("menuType", menuType);
+
+        return "/board/form";
     }
 
     /**
      * 수정 화면으로 이동
      *
+     * @param menuType
      * @param boardSeq
+     * @param parameter
      * @param model
+     * @return
      */
-    @GetMapping("/edit/{boardSeq}")
+    @GetMapping("/{menuType}/edit/{boardSeq}")
     @RequestConfig(loginCheck = false)
-    public String edit(@PathVariable(required = true) int boardSeq, BoardParameter parameter, Model model) {
+    public String edit(@PathVariable MenuType menuType, @PathVariable(required = true) int boardSeq, BoardParameter parameter, Model model) {
         // 수정 화면
         if (parameter.getBoardSeq() > 0) {
             Board board = boardService.get(parameter.getBoardSeq());
@@ -112,6 +115,7 @@ public class BoardController {
         }
 
         model.addAttribute("parameter", parameter);
+        model.addAttribute("menuType", menuType);
 
         return "/board/form";
     }
@@ -122,7 +126,7 @@ public class BoardController {
      * @param board
      * @return
      */
-    @PostMapping("/save")
+    @PostMapping("/{menuType}/save")
     @RequestConfig(loginCheck = false)
     @ResponseBody
     @ApiOperation(value = "게시글 등록/수정 처리", notes = "신규 게시글 저장 및 기존 게시글 수정이 가능합니다.")
