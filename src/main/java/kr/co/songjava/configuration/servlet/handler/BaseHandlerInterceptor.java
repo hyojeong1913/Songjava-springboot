@@ -3,6 +3,7 @@ package kr.co.songjava.configuration.servlet.handler;
 import kr.co.songjava.configuration.exception.BaseException;
 import kr.co.songjava.configuration.http.BaseResponseCode;
 import kr.co.songjava.framework.web.bind.annotation.RequestConfig;
+import kr.co.songjava.mvc.domain.MenuType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -39,6 +40,12 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (handler instanceof HandlerMethod) {
+            if (modelAndView != null) {
+                modelAndView.addObject("menuTypes", MenuType.values());
+            }
+        }
+
         logger.info("postHandle requestURI : {}", request.getRequestURI());
     }
 }

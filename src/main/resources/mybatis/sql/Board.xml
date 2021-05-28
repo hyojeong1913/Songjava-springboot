@@ -36,12 +36,12 @@
             </if>
 
             <!-- 게시물 종류 검색 -->
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parameter.boardType)">
+            <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(parameter.boardType)">
                 AND B.BOARD_TYPE = #{parameter.boardType}
             </if>
 
             <!-- 게시판 종류 검색 -->
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parameter.boardTypes)">
+            <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(parameter.boardTypes)">
                 AND B.BOARD_TYPE IN (
                 <foreach collection="parameter.boardTypes" item="value" separator=",">
                     #{value}

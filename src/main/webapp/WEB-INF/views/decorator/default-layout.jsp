@@ -12,6 +12,12 @@
     <title>Insert title here</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
+    <style type="text/css">
+        .active {
+            color: red !important;
+        }
+    </style>
+
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
     <sitemesh:write property="head" />
@@ -26,20 +32,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link ${menuType.name() == 'community' ? 'active' : ''}" href="/community"><spring:message code="menu.community" /></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ${menuType.name() == 'notice' ? 'active' : ''}" href="/notice"><spring:message code="menu.notice" /></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ${menuType.name() == 'faq' ? 'active' : ''}" href="/faq"><spring:message code="menu.faq" /></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link ${menuType.name() == 'inquiry' ? 'active' : ''}" href="/inquiry"><spring:message code="menu.inquiry" /></a>
-                    </li>
+
+                    <c:forEach var="menu" items="${menuTypes}">
+                        <li class="nav-item">
+                            <a class="nav-link ${menu == menuType ? 'active' : ''}" href="${menu.url()}"><spring:message code="${menu.menuCode()}" /></a>
+                        </li>
+                    </c:forEach>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
