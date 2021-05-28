@@ -49,6 +49,8 @@ public class BoardController {
         logger.info("menuType : {}", menuType);
         logger.info("pageRequest : {}", pageRequest);
 
+        parameter.setBoardType(menuType.boardType());
+
         PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<BoardSearchParameter>(pageRequest, parameter);
 
         List<Board> boardList = boardService.getList(pageRequestParameter);
@@ -136,7 +138,7 @@ public class BoardController {
             @ApiImplicitParam(name = "boardType", value = "게시글 유형", example = "NOTICE"),
             @ApiImplicitParam(name = "contents", value = "게시글 내용", example = "contents1")
     })
-    public BaseResponse<Integer> save(BoardParameter board) {
+    public BaseResponse<Integer> save(@PathVariable MenuType menuType, BoardParameter board) {
 
         // 게시글 제목 필수 체크
         if (StringUtils.isEmpty(board.getTitle())) {
@@ -147,6 +149,8 @@ public class BoardController {
         if (StringUtils.isEmpty(board.getContents())) {
             throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] { "contents", "게시글 내용" });
         }
+
+        board.setBoardType(menuType.boardType());
 
         // 게시글 등록/수정 처리
         boardService.save(board);

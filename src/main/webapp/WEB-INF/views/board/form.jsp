@@ -12,7 +12,6 @@
 <body>
     <form id="form">
         <input type="hidden" name="boardSeq" value="${board == null ? 0 : board.boardSeq}">
-        <input type="hidden" name="boardType" value="COMMUNITY">
 
         <div class="container">
             <div class="row mb-3">
@@ -34,8 +33,6 @@
             <button type="submit" class="btn btn-primary"><spring:message code="button.save" /></button>
         </div>
     </form>
-
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
     <script>
         $(function () {

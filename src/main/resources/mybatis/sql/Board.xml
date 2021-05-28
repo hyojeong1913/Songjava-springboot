@@ -17,24 +17,39 @@
             B.DEL_YN
         FROM
             T_BOARD B
+        <include refid="getListQuery" />
+        ORDER BY B.REG_DATE DESC
+        LIMIT #{pageRequest.limit}, #{pageRequest.offset}
+    </select>
+
+    <select id="getCount" parameterType="kr.co.songjava.framework.data.domain.PageRequestParameter">
+        SELECT COUNT(1)
+        FROM T_BOARD B
+        <include refid="getListQuery" />
+    </select>
+
+    <sql id="getListQuery">
         <where>
-            <!-- keyword 검색 -->
+            <!-- 키워드 검색 -->
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parameter.keyword)">
                 AND B.TITLE LIKE CONCAT('%', #{parameter.keyword}, '%')
             </if>
 
+            <!-- 게시물 종류 검색 -->
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parameter.boardType)">
+                AND B.BOARD_TYPE = #{parameter.boardType}
+            </if>
+
             <!-- 게시판 종류 검색 -->
-            <if test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(parameter.boardTypes)">
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parameter.boardTypes)">
                 AND B.BOARD_TYPE IN (
-                    <foreach collection="parameter.boardTypes" item="value" separator=",">
-                        #{value}
-                    </foreach>
+                <foreach collection="parameter.boardTypes" item="value" separator=",">
+                    #{value}
+                </foreach>
                 )
             </if>
         </where>
-        ORDER BY B.REG_DATE DESC
-        LIMIT #{pageRequest.limit}, #{pageRequest.offset}
-    </select>
+    </sql>
 
     <select id="get" parameterType="int" resultType="kr.co.songjava.mvc.domain.Board">
         SELECT

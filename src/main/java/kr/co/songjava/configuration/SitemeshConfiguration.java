@@ -10,7 +10,7 @@ public class SitemeshConfiguration extends ConfigurableSiteMeshFilter {
         builder.addDecoratorPath("/community**", "/WEB-INF/views/decorator/default-layout.jsp");
         builder.addDecoratorPath("/notice**", "/WEB-INF/views/decorator/default-layout.jsp");
         builder.addDecoratorPath("/faq**", "/WEB-INF/views/decorator/default-layout.jsp");
-        builder.addDecoratorPath("inquiry**", "/WEB-INF/views/decorator/default-layout.jsp");
+        builder.addDecoratorPath("/inquiry**", "/WEB-INF/views/decorator/default-layout.jsp");
 
         super.applyCustomConfiguration(builder);
     }
