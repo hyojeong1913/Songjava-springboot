@@ -30,4 +30,7 @@ public interface BoardRepository {
 
     // 게시글 삭제
     void delete(int boardSeq);
+
+    // vuejs 연동을 위한 게시글 목록 리스트 조회 Api
+    List<Board> getListApi();
 }

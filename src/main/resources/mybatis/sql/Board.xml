@@ -116,4 +116,16 @@
         WHERE
             BOARD_SEQ = #{boardSeq}
     </delete>
+
+    <select id="getListApi" parameterType="kr.co.songjava.mvc.domain.Board" resultType="kr.co.songjava.mvc.domain.Board">
+        SELECT
+            B.BOARD_SEQ,
+            B.TITLE,
+            B.CONTENTS,
+            B.BOARD_TYPE,
+            B.REG_DATE
+        FROM
+            T_BOARD B
+        ORDER BY B.REG_DATE DESC
+    </select>
 </mapper>

@@ -88,4 +88,13 @@ public class BoardService {
     public void delete(int boardSeq) {
         boardRepository.delete(boardSeq);
     }
+
+    /**
+     * vuejs 연동을 위한 게시글 목록 리스트 조회 Api
+     *
+     * @return
+     */
+    public List<Board> getListApi() {
+        return boardRepository.getListApi();
+    }
 }

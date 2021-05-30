@@ -257,4 +257,15 @@ public class BoardController {
         // 게시글 삭제했으므로 마지막으로 true 리턴
         return new BaseResponse<Boolean>(true);
     }
+
+    /**
+     * vuejs 연동을 위한 게시글 목록 리스트 조회 Api
+     * RestApi 형식을 사용하기 위해 method 앞에 @ResponseBody 붙여서 사용
+     *
+     * @return
+     */
+    @GetMapping("/getListApi")
+    public @ResponseBody List<Board> getListApi() {
+        return boardService.getListApi();
+    }
 }
